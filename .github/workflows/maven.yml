@@ -6,13 +6,14 @@ on:
   pull_request:
     branches: [ "main" ]
 
+env:
+  Message: Shubham
+
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Read a variable
-        run: echo "Message value is ${{ vars.MESSAGE }}"
       - uses: actions/checkout@v3
       - name: Set up JDK 17
         uses: actions/setup-java@v3
@@ -20,8 +21,6 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
-        env:
-          MESSAGE: ${{ vars.MESSAGE }}
       - name: Build with Maven
         # run: mvn clean package
         run: mvn clean install
