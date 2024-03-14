@@ -8,33 +8,33 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
-    env:
-      MESSAGE: 'shubham'
-      
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up JDK 17
-      uses: actions/setup-java@v3
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-        cache: maven
-    - name: Build with Maven
-      # run: mvn clean package
-      run: mvn clean install
+      - name: Read a variable
+        run: echo "Message value is ${{ vars.MESSAGE }}"
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+        env:
+          MESSAGE: ${{ vars.MESSAGE }}
+      - name: Build with Maven
+        # run: mvn clean package
+        run: mvn clean install
 
-    - name: List Contents of Target Directory
-      run: ls -R target
+      - name: List Contents of Target Directory
+        run: ls -R target
 
-    - name: Upload H2 Jar Artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: h2-artifact
-        path: target/*.war
+      - name: Upload H2 Jar Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: h2-artifact
+          path: target/*.war
 
-    - name: Replace Placeholder in application.properties
-      run: echo "MESSAGE:$MESSAGE"
+      - name: Replace Placeholder in application.properties
+        run: echo "MESSAGE:$MESSAGE"
         
